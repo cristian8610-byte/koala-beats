@@ -136,6 +136,24 @@ section{padding:90px 0;border-bottom:1px solid var(--line)}
 .st-help{padding:0 16px 16px;color:var(--muted);font-size:13px}
 .st-msg{color:var(--accent);font-size:13px;font-weight:600;min-height:20px}
 
+/* LICENCIAS */
+dialog.lic{margin:auto;border:1px solid var(--line);border-radius:20px;background:var(--bg2);color:var(--text);padding:0;width:min(920px,calc(100vw - 32px));max-height:calc(100vh - 32px)}
+dialog.lic::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
+.lic-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:24px 24px 8px}
+.lic-head h3{font-size:34px}
+.lic-head p{color:var(--muted);font-size:14px;margin-top:6px}
+.lic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:16px 24px 24px}
+.lic-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:10px}
+.lic-card.hl{border-color:var(--accent);background:linear-gradient(160deg,#25210f,var(--card) 60%)}
+.lic-card h4{font-family:Anton,sans-serif;font-weight:400;font-size:24px;text-transform:uppercase}
+.lic-card .pr{font-family:Anton,sans-serif;font-size:38px;color:var(--accent);line-height:1}
+.lic-card ul{list-style:none;color:var(--muted);font-size:14px;flex:1}
+.lic-card li{padding:6px 0;border-top:1px solid var(--line)}
+.lic-card .btn{justify-content:center}
+.lic-x{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lic-x svg{width:16px;height:16px}
+@media (max-width:760px){ .lic-grid{grid-template-columns:1fr} .lic-head h3{font-size:26px} }
+
 /* ABOUT */
 .about{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center}
 .about p{color:var(--muted);margin-bottom:16px;font-size:17px}
@@ -354,6 +372,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   </div>
 </footer>
 
+<dialog class="lic" id="licDlg" aria-labelledby="licTitle">
+  <div class="lic-head">
+    <div><h3 id="licTitle">Licencias</h3><p>Elige cómo vas a usar el beat. El pago y la descarga se hacen de forma segura en Gumroad.</p></div>
+    <button class="lic-x" id="licClose" aria-label="Cerrar"></button>
+  </div>
+  <div class="lic-grid" id="licGrid"></div>
+</dialog>
+
 <div class="player" id="player">
   <div class="wrap">
     <div class="p-info"><b id="pTitle">—</b><span id="pType"></span></div>
@@ -382,6 +408,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   var ICON_PLUS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
   var ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
 
+  // Licencias de los instrumentales. En tracks.js cada beat puede tener "licencias": {"basica": url, "premium": url, "exclusiva": url};
+  // si no, se usa "buy" (tu Gumroad) y si tampoco hay, el formulario de contacto.
+  var LICENCIAS = [
+    {id:'basica', nombre:'Básica', precio:'$14.99', puntos:['Archivo MP3 sin tag','Hasta 10.000 reproducciones','Uso no comercial y streaming','Mención: prod. Koala Beats']},
+    {id:'premium', nombre:'Premium', precio:'$29.99', puntos:['Archivos MP3 + WAV','Hasta 100.000 reproducciones','Uso comercial y videoclip','Mención: prod. Koala Beats'], hl:true},
+    {id:'exclusiva', nombre:'Exclusiva', precio:'$149', puntos:['WAV en máxima calidad','Reproducciones ilimitadas','Derechos exclusivos del beat','Se retira de la venta']}
+  ];
+
   var tracks = (window.TRACKS || []).map(function(t,i){ t.id=i; return t; });
   var audio = document.getElementById('audio');
   var current = null, queue = [];
@@ -399,7 +433,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   function row(t){
     var acts = t.type==='loop'
       ? '<button class="dl add" data-add="'+t.id+'"><span>Al estudio</span>'+ICON_PLUS+'</button>'
-      : '<button class="dl buy" data-beat="'+t.id+'"><span>Comprar'+(t.price?' '+esc(t.price):'')+'</span>'+ICON_CART+'</button>';
+      : '<button class="dl buy" data-beat="'+t.id+'"><span>Desde '+esc(LICENCIAS[0].precio)+'</span>'+ICON_CART+'</button>';
     return '<div class="track" data-id="'+t.id+'">'+
       '<button class="play" aria-label="Reproducir '+esc(t.title)+'">'+ICON_PLAY+'</button>'+
       '<div style="min-width:0"><div class="t-title">'+esc(t.title)+'</div><div class="t-meta"><span>'+esc(t.genre)+'</span></div></div>'+
@@ -453,6 +487,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     $('player').classList.add('show');
   }
 
+  function abrirLicencias(t){
+    $('licTitle').textContent = t.title;
+    $('licGrid').innerHTML = LICENCIAS.map(function(l,i){
+      return '<div class="lic-card'+(l.hl?' hl':'')+'"><h4>'+esc(l.nombre)+'</h4><div class="pr">'+esc(l.precio)+'</div>'+
+        '<ul>'+l.puntos.map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul>'+
+        '<button class="btn '+(l.hl?'btn-primary':'btn-ghost')+'" data-lic="'+i+'" data-track="'+t.id+'">Comprar '+esc(l.nombre)+'</button></div>';
+    }).join('');
+    var d = $('licDlg');
+    if(d.showModal) d.showModal(); else d.setAttribute('open','');
+  }
+
   function step(d){
     if(!current||!queue.length) return;
     var i = queue.findIndex(function(x){return x.id===current.id;});
@@ -470,10 +515,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     if(b){ play(tracks[+b.closest('.track').dataset.id]); return; }
     var bt = e.target.closest('[data-beat]');
     if(bt){
-      var t = tracks[+bt.dataset.beat], fm = $('form');
-      if(t.buy){ window.open(t.buy, '_blank', 'noopener'); return; }
+      abrirLicencias(tracks[+bt.dataset.beat]);
+      return;
+    }
+    var lb = e.target.closest('[data-lic]');
+    if(lb){
+      var lt = tracks[+lb.dataset.track], lic = LICENCIAS[+lb.dataset.lic];
+      var url = (lt.licencias && lt.licencias[lic.id]) || lt.buy;
+      $('licDlg').close();
+      if(url){ window.open(url, '_blank', 'noopener'); return; }
+      var fm = $('form');
       fm.motivo.value = 'Comprar instrumental';
-      fm.mensaje.value = 'Hola, quiero comprar el instrumental "'+t.title+'"'+(t.price?' ('+t.price+')':'')+'.';
+      fm.mensaje.value = 'Hola, quiero la licencia '+lic.nombre+' ('+lic.precio+') del instrumental "'+lt.title+'".';
       location.hash = '#contacto';
       return;
     }
@@ -727,6 +780,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   });
 
   // Menú móvil y enlace activo
+  $('licClose').innerHTML = ICON_X;
+  $('licClose').onclick = function(){ $('licDlg').close(); };
+  $('licDlg').addEventListener('click', function(e){ if(e.target === this) this.close(); });
   $('burger').onclick = function(){ $('menu').classList.toggle('open'); };
   document.querySelectorAll('.menu a').forEach(function(a){ a.onclick=function(){ $('menu').classList.remove('open'); }; });
   var links = document.querySelectorAll('.menu a');
