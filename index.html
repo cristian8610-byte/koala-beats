@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Koala Beats</title>
-<meta name="description" content="Koala Beats: instrumentales de hip hop, loops gratis y un estudio online para crear tus propios beats.">
+<meta name="description" content="Koala Beats: instrumentales de hip hop, loops y un estudio online para crear tus propios beats.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -224,16 +224,16 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 <div class="hero" id="inicio">
   <div class="eq" aria-hidden="true" id="eq"></div>
   <div class="wrap">
-    <span class="tag">Instrumentales · Loops gratis · Estudio online</span>
+    <span class="tag">Instrumentales · Loops · Estudio online</span>
     <h1>Koala<br><em>Beats</em></h1>
-    <p>Instrumentales de hip hop para rapear y grabar, loops gratis para tus producciones y un estudio donde montar tu propio beat sin instalar nada.</p>
+    <p>Instrumentales de hip hop para rapear y grabar, loops para escuchar y un estudio donde montar tu propio beat con ellos sin instalar nada.</p>
     <div class="btns">
       <a href="#estudio" class="btn btn-primary">Crear un beat</a>
       <a href="#instrumentales" class="btn btn-ghost">Instrumentales</a>
-      <a href="#loops" class="btn btn-ghost">Loops gratis</a>
+      <a href="#loops" class="btn btn-ghost">Loops</a>
     </div>
     <div class="stats">
-      <div><b id="nLoops">0</b><span>Loops gratis</span></div>
+      <div><b id="nLoops">0</b><span>Loops</span></div>
       <div><b id="nInst">0</b><span>Instrumentales</span></div>
       <div><b id="nGen">0</b><span>Géneros</span></div>
       <div><b>100%</b><span>Royalty-free</span></div>
@@ -257,8 +257,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 <section id="loops">
   <div class="wrap">
     <div class="head">
-      <h2>Loops gratis</h2>
-      <p>Loops WAV libres de regalías. Descárgalos gratis o mándalos al estudio para montar tu beat.</p>
+      <h2>Loops</h2>
+      <p>Escucha los loops y mándalos al Estudio Koala para montar tu propio beat.</p>
     </div>
     <div class="tools">
       <input class="search" data-for="loop" placeholder="Buscar loop…">
@@ -313,7 +313,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <div class="feat">
       <div><h3>Calidad</h3><p>Mezclas cuidadas y listas para grabar.</p></div>
       <div><h3>Variedad</h3><p>Boom bap, trap, drill, phonk, lo-fi, R&amp;B y más.</p></div>
-      <div><h3>Gratis</h3><p>Todos los loops se descargan sin registro.</p></div>
+      <div><h3>Loops</h3><p>Cientos de loops para escuchar y combinar.</p></div>
       <div><h3>Estudio</h3><p>Monta tu beat en el navegador y descárgalo.</p></div>
     </div>
   </div>
@@ -378,7 +378,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   var ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
   var ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
   var ICON_STOP = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg>';
-  var ICON_DL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 5-5m-5 5-5-5M4 21h16"/></svg>';
   var ICON_CART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11.5l2-8H6.2"/></svg>';
   var ICON_PLUS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
   var ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
@@ -399,13 +398,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
   function row(t){
     var acts = t.type==='loop'
-      ? '<a class="dl" href="'+src(t)+'" download><span>Descargar</span>'+ICON_DL+'</a>'+
-        '<button class="dl add" data-add="'+t.id+'"><span>Al estudio</span>'+ICON_PLUS+'</button>'
+      ? '<button class="dl add" data-add="'+t.id+'"><span>Al estudio</span>'+ICON_PLUS+'</button>'
       : '<button class="dl buy" data-beat="'+t.id+'"><span>Comprar'+(t.price?' '+esc(t.price):'')+'</span>'+ICON_CART+'</button>';
     return '<div class="track" data-id="'+t.id+'">'+
       '<button class="play" aria-label="Reproducir '+esc(t.title)+'">'+ICON_PLAY+'</button>'+
       '<div style="min-width:0"><div class="t-title">'+esc(t.title)+'</div><div class="t-meta"><span>'+esc(t.genre)+'</span></div></div>'+
-      (t.type==='loop' ? '<span class="badge free">Gratis</span>' : '<span class="badge">'+(t.preview?'Preview':'Instrumental')+'</span>')+
+      (t.type==='loop' ? '<span class="badge">Loop</span>' : '<span class="badge">'+(t.preview?'Preview':'Instrumental')+'</span>')+
       '<span class="t-dur" data-dur="'+t.id+'">'+(t.dur?fmt(t.dur):'')+'</span>'+
       '<div class="acts">'+acts+'</div>'+
     '</div>';
@@ -451,7 +449,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     audio.src = src(t);
     audio.play();
     $('pTitle').textContent = t.title;
-    $('pType').textContent = t.type==='loop' ? 'Loop gratis' : 'Instrumental';
+    $('pType').textContent = t.type==='loop' ? 'Loop' : 'Instrumental';
     $('player').classList.add('show');
   }
 
@@ -563,7 +561,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
           buffers[t.studio] = buf;
           (pending[t.studio]||[]).forEach(function(f){ f(buf); }); delete pending[t.studio];
         }, function(){ delete pending[t.studio]; msg('No se pudo leer el loop '+t.title+'.'); });
-      }).catch(function(){ delete pending[t.studio]; msg('No se pudo descargar el loop '+t.title+'.'); });
+      }).catch(function(){ delete pending[t.studio]; msg('No se pudo cargar el loop '+t.title+'.'); });
       return;
     }
     var s = document.createElement('script');
