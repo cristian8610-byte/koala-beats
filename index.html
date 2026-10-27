@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Koala Beats</title>
+<meta name="description" content="Koala Beats: instrumentales de hip hop, loops gratis y un estudio online para crear tus propios beats.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0c; --bg2:#141416; --card:#1a1a1d; --line:#2a2a2f;
+  --text:#f2f0ea; --muted:#9a978f; --accent:#f5c518; --accent2:#e4572e;
+  --radius:14px; --max:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.55;padding-bottom:96px;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:Anton,Impact,sans-serif;font-weight:400;letter-spacing:.5px;text-transform:uppercase;line-height:1}
+
+/* NAV */
+header{position:sticky;top:0;z-index:50;background:rgba(11,11,12,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-family:Anton,sans-serif;font-size:26px;letter-spacing:1px;display:flex;align-items:center;gap:10px}
+.logo span{color:var(--accent)}
+.logo svg{width:34px;height:34px}
+.menu{display:flex;gap:28px;font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:1px}
+.menu a{color:var(--muted);transition:color .2s}
+.menu a:hover,.menu a.active{color:var(--text)}
+.burger{display:none;width:40px;height:40px;align-items:center;justify-content:center}
+.burger i{display:block;width:22px;height:2px;background:var(--text);box-shadow:0 7px 0 var(--text),0 -7px 0 var(--text)}
+
+/* HERO */
+.hero{position:relative;padding:110px 0 90px;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero:before{content:"";position:absolute;inset:0;background:
+  radial-gradient(600px 300px at 80% 20%,rgba(245,197,24,.18),transparent 70%),
+  radial-gradient(500px 300px at 10% 90%,rgba(228,87,46,.15),transparent 70%)}
+.hero .wrap{position:relative}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:6px 12px;border-radius:99px;margin-bottom:24px}
+.hero h1{font-size:clamp(52px,10vw,128px)}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{max-width:560px;color:var(--muted);font-size:18px;margin:24px 0 36px}
+.btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:99px;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-primary{background:var(--accent);color:#111}
+.btn-ghost{border:1px solid var(--line);background:var(--bg2)}
+.btn svg{width:16px;height:16px}
+.stats{display:flex;gap:48px;margin-top:64px;flex-wrap:wrap}
+.stats b{display:block;font-family:Anton,sans-serif;font-size:42px;font-weight:400}
+.stats span{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:1px}
+.eq{position:absolute;right:20px;bottom:0;display:flex;gap:6px;align-items:flex-end;height:180px;opacity:.5}
+.eq i{width:10px;background:linear-gradient(var(--accent),var(--accent2));border-radius:3px 3px 0 0;animation:eq 1.2s ease-in-out infinite alternate}
+@keyframes eq{from{height:15%}to{height:100%}}
+
+/* SECTIONS */
+section{padding:90px 0;border-bottom:1px solid var(--line)}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:36px;flex-wrap:wrap}
+.head h2{font-size:clamp(40px,6vw,64px)}
+.head p{color:var(--muted);max-width:460px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.search{flex:1;min-width:200px;background:var(--bg2);border:1px solid var(--line);border-radius:99px;padding:12px 18px;color:var(--text);font:inherit}
+.search:focus{outline:none;border-color:var(--accent)}
+.chip{padding:10px 16px;border-radius:99px;border:1px solid var(--line);background:var(--bg2);font-size:13px;font-weight:600}
+.chip.on{background:var(--text);color:#111;border-color:var(--text)}
+.count{color:var(--muted);font-size:13px;margin-bottom:12px}
+
+/* TRACK LIST */
+.list{display:flex;flex-direction:column;gap:10px}
+.track{display:grid;grid-template-columns:52px 1fr auto auto auto;align-items:center;gap:18px;padding:12px 18px 12px 12px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);transition:border-color .2s,background .2s}
+.track:hover{border-color:#3a3a40}
+.track.playing{border-color:var(--accent);background:#1f1d14}
+.play{width:52px;height:52px;border-radius:12px;background:var(--bg2);display:flex;align-items:center;justify-content:center;border:1px solid var(--line);transition:background .2s}
+.track:hover .play,.track.playing .play{background:var(--accent);color:#111;border-color:var(--accent)}
+.play svg{width:20px;height:20px}
+.t-title{font-weight:700;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.t-meta{color:var(--muted);font-size:13px;display:flex;gap:12px;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:6px;background:var(--bg2);border:1px solid var(--line);color:var(--muted)}
+.badge.free{color:#7ddc8a;border-color:#2e5a35}
+.t-dur{color:var(--muted);font-variant-numeric:tabular-nums;font-size:14px;min-width:44px;text-align:right}
+.acts{display:flex;gap:8px}
+.dl{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:99px;border:1px solid var(--line);font-size:13px;font-weight:700;transition:background .2s,color .2s;white-space:nowrap}
+.dl:hover{background:var(--text);color:#111}
+.dl.buy,.dl.add{border-color:var(--accent);color:var(--accent)}
+.dl.buy:hover,.dl.add:hover{background:var(--accent);color:#111}
+.dl svg{width:16px;height:16px}
+.empty{padding:40px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:var(--radius)}
+
+/* STUDIO */
+.studio{background:var(--bg2);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.st-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:18px 20px;border-bottom:1px solid var(--line);background:var(--card)}
+.st-top .grow{flex:1}
+.st-play{width:56px;height:56px;border-radius:50%;background:var(--accent);color:#111;display:flex;align-items:center;justify-content:center}
+.st-play svg{width:22px;height:22px}
+.st-field{display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.st-field input[type=range]{width:130px;accent-color:var(--accent);padding:0;border:0;background:none}
+.st-field select{padding:8px 12px;border-radius:8px;width:auto}
+.st-info{font-size:13px;color:var(--muted)}
+.st-info b{color:var(--text)}
+.st-body{display:grid;grid-template-columns:300px 1fr;min-height:420px}
+.st-body>*{min-width:0}
+.lib{border-right:1px solid var(--line);display:flex;flex-direction:column;max-height:560px}
+.lib-head{padding:14px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.lib-head select,.lib-head input{padding:10px 12px;border-radius:8px;font-size:14px}
+.lib-list{overflow:auto;flex:1}
+.lib-item{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid var(--line);font-size:14px}
+.lib-item:hover{background:var(--card)}
+.lib-item .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lib-item small{color:var(--muted);font-size:11px}
+.ib{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ib:hover{background:var(--accent);color:#111;border-color:var(--accent)}
+.ib svg{width:14px;height:14px}
+.ib.on{background:var(--accent);color:#111;border-color:var(--accent)}
+.arr{padding:16px;overflow-x:auto}
+.ruler,.lane{display:grid;grid-template-columns:200px repeat(var(--blocks),minmax(44px,1fr));gap:6px;align-items:center;min-width:calc(200px + var(--blocks) * 50px)}
+.ruler{margin-bottom:8px;font-size:11px;color:var(--muted);font-weight:700;text-align:center}
+.ruler span.now{color:var(--accent)}
+.lane{margin-bottom:8px}
+.lane-head{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;height:72px;justify-content:center}
+.lane-head .row{display:flex;align-items:center;gap:6px}
+.lane-head .nm{flex:1;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lane-head .nm.empty-nm{color:var(--muted);font-weight:500}
+.lane-head input[type=range]{flex:1;accent-color:var(--accent);padding:0;border:0;background:none;min-width:0}
+.lane-head .ib{width:26px;height:26px;font-size:11px;font-weight:800}
+.lane.sel .lane-head{border-color:var(--accent)}
+.cell{height:72px;border-radius:10px;border:1px solid var(--line);background:var(--card);transition:background .1s}
+.cell:hover{border-color:#4a4a50}
+.cell.on{background:linear-gradient(180deg,var(--accent),#c99a0b);border-color:var(--accent)}
+.cell.now{box-shadow:0 0 0 2px var(--text) inset}
+.cell:disabled{opacity:.35;cursor:default}
+.st-help{padding:0 16px 16px;color:var(--muted);font-size:13px}
+.st-msg{color:var(--accent);font-size:13px;font-weight:600;min-height:20px}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center}
+.about p{color:var(--muted);margin-bottom:16px;font-size:17px}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.feat div{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.feat h3{font-size:24px;margin-bottom:8px;color:var(--accent)}
+.feat p{font-size:14px;margin:0}
+
+/* CONTACT */
+.contact{display:grid;grid-template-columns:1fr 1.2fr;gap:50px}
+.contact p{color:var(--muted)}
+.social{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+form{display:grid;gap:12px}
+input,textarea,select{width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;color:var(--text);font:inherit}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
+textarea{min-height:130px;resize:vertical}
+.ok{color:var(--accent);font-weight:600;display:none}
+
+footer{padding:40px 0;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* PLAYER */
+.player{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(20,20,22,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);transform:translateY(100%);transition:transform .3s}
+.player.show{transform:none}
+.player .wrap{display:grid;grid-template-columns:minmax(0,260px) auto 1fr auto;align-items:center;gap:20px;height:84px}
+.p-info b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p-info span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1px}
+.p-ctrl{display:flex;gap:8px;align-items:center}
+.p-ctrl button{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.p-ctrl button:hover{background:var(--card)}
+.p-ctrl .main{width:48px;height:48px;background:var(--accent);color:#111}
+.p-ctrl .main:hover{background:var(--accent)}
+.p-ctrl svg{width:18px;height:18px}
+.p-ctrl .on{color:var(--accent)}
+.p-bar{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{flex:1;height:6px;background:var(--line);border-radius:6px;cursor:pointer;position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:6px;width:0}
+.vol{width:90px;accent-color:var(--accent)}
+
+@media (max-width:900px){
+  .menu{position:fixed;top:68px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--line);display:none}
+  .menu.open{display:flex}
+  .menu a{padding:16px 20px;border-top:1px solid var(--line)}
+  .burger{display:flex}
+  .about,.contact{grid-template-columns:1fr}
+  .eq{display:none}
+  .st-body{grid-template-columns:1fr}
+  .lib{border-right:0;border-bottom:1px solid var(--line);max-height:320px}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .track{grid-template-columns:48px 1fr auto;gap:12px}
+  .play{width:48px;height:48px}
+  .track .badge,.t-dur{display:none}
+  .dl span{display:none}
+  .dl{padding:10px}
+  .feat{grid-template-columns:1fr}
+  .player .wrap{grid-template-columns:1fr auto;height:auto;padding-top:10px;padding-bottom:10px;gap:10px}
+  .p-bar{grid-column:1/-1;order:3}
+  .vol{display:none}
+  .stats{gap:24px 32px}.stats>div{min-width:40%}
+  .ruler,.lane{grid-template-columns:140px repeat(var(--blocks),minmax(40px,1fr));min-width:calc(140px + var(--blocks) * 46px)}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#inicio" class="logo" aria-label="Koala Beats">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="14" cy="22" r="12" fill="#f5c518"/><circle cx="50" cy="22" r="12" fill="#f5c518"/><circle cx="14" cy="22" r="6" fill="#0b0b0c"/><circle cx="50" cy="22" r="6" fill="#0b0b0c"/><circle cx="32" cy="36" r="20" fill="#f2f0ea"/><ellipse cx="32" cy="40" rx="6" ry="8" fill="#0b0b0c"/><circle cx="24" cy="31" r="2.6" fill="#0b0b0c"/><circle cx="40" cy="31" r="2.6" fill="#0b0b0c"/></svg>
+      KOALA<span>BEATS</span>
+    </a>
+    <nav class="menu" id="menu">
+      <a href="#inicio">Inicio</a>
+      <a href="#instrumentales">Instrumentales</a>
+      <a href="#loops">Loops</a>
+      <a href="#estudio">Estudio</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menú"><i></i></button>
+  </div>
+</header>
+
+<div class="hero" id="inicio">
+  <div class="eq" aria-hidden="true" id="eq"></div>
+  <div class="wrap">
+    <span class="tag">Instrumentales · Loops gratis · Estudio online</span>
+    <h1>Koala<br><em>Beats</em></h1>
+    <p>Instrumentales de hip hop para rapear y grabar, loops gratis para tus producciones y un estudio donde montar tu propio beat sin instalar nada.</p>
+    <div class="btns">
+      <a href="#estudio" class="btn btn-primary">Crear un beat</a>
+      <a href="#instrumentales" class="btn btn-ghost">Instrumentales</a>
+      <a href="#loops" class="btn btn-ghost">Loops gratis</a>
+    </div>
+    <div class="stats">
+      <div><b id="nLoops">0</b><span>Loops gratis</span></div>
+      <div><b id="nInst">0</b><span>Instrumentales</span></div>
+      <div><b id="nGen">0</b><span>Géneros</span></div>
+      <div><b>100%</b><span>Royalty-free</span></div>
+    </div>
+  </div>
+</div>
+
+<section id="instrumentales">
+  <div class="wrap">
+    <div class="head">
+      <h2>Instrumentales</h2>
+      <p>Beats completos listos para grabar encima. Escúchalos enteros y cómpralos para tu tema.</p>
+    </div>
+    <div class="tools">
+      <input class="search" data-for="instrumental" placeholder="Buscar instrumental…">
+    </div>
+    <div class="list" id="list-instrumental"></div>
+  </div>
+</section>
+
+<section id="loops">
+  <div class="wrap">
+    <div class="head">
+      <h2>Loops gratis</h2>
+      <p>Loops WAV libres de regalías. Descárgalos gratis o mándalos al estudio para montar tu beat.</p>
+    </div>
+    <div class="tools">
+      <input class="search" data-for="loop" placeholder="Buscar loop…">
+    </div>
+    <div class="tools" id="genreChips"></div>
+    <p class="count" id="loopCount"></p>
+    <div class="list" id="list-loop"></div>
+    <div style="text-align:center;margin-top:20px"><button class="btn btn-ghost" id="more" style="display:none">Ver más loops</button></div>
+  </div>
+</section>
+
+<section id="estudio">
+  <div class="wrap">
+    <div class="head">
+      <h2>Estudio Koala</h2>
+      <p>Crea tu instrumental con los loops: pon uno en cada pista, enciende los bloques donde quieras que suene y descarga el resultado en WAV.</p>
+    </div>
+    <div class="studio">
+      <div class="st-top">
+        <button class="st-play" id="stPlay" aria-label="Reproducir beat"></button>
+        <div class="st-field">Velocidad <span><input type="range" id="stSpeed" min="0.8" max="1.2" step="0.01" value="1"> <b id="stSpeedV" style="color:var(--text)">100%</b></span></div>
+        <div class="st-field">Bloques <select id="stBlocks"><option>4</option><option selected>8</option><option>12</option><option>16</option></select></div>
+        <div class="st-field">Volumen <input type="range" id="stVol" min="0" max="1" step="0.01" value="0.9"></div>
+        <div class="grow st-info" id="stInfo"></div>
+        <button class="btn btn-ghost" id="stClear">Vaciar</button>
+        <button class="btn btn-primary" id="stExport">Descargar WAV</button>
+      </div>
+      <div class="st-body">
+        <div class="lib">
+          <div class="lib-head">
+            <select id="libGenre" aria-label="Género"><option value="">Todos los géneros</option></select>
+            <input id="libSearch" placeholder="Buscar loop…">
+          </div>
+          <div class="lib-list" id="libList"></div>
+        </div>
+        <div>
+          <div class="arr" id="arr"></div>
+          <div class="st-help"><span class="st-msg" id="stMsg"></span><br>Elige una pista (se marca en amarillo) y pulsa <b>+</b> en un loop para cargarlo. Los bloques duran lo que el loop de la primera pista; el resto de loops se repiten dentro de cada bloque.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="nosotros">
+  <div class="wrap about">
+    <div>
+      <div class="head" style="margin-bottom:24px"><h2>Sobre Koala Beats</h2></div>
+      <p>Somos productores de hip hop que viven el beat desde la base: samples polvorientos, baterías con golpe y bajos que se sienten en el pecho.</p>
+      <p>Koala Beats nace para compartir nuestro trabajo con raperos, cantantes y productores que buscan un sonido auténtico. Escucha, crea y graba.</p>
+    </div>
+    <div class="feat">
+      <div><h3>Calidad</h3><p>Mezclas cuidadas y listas para grabar.</p></div>
+      <div><h3>Variedad</h3><p>Boom bap, trap, drill, phonk, lo-fi, R&amp;B y más.</p></div>
+      <div><h3>Gratis</h3><p>Todos los loops se descargan sin registro.</p></div>
+      <div><h3>Estudio</h3><p>Monta tu beat en el navegador y descárgalo.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="wrap contact">
+    <div>
+      <div class="head" style="margin-bottom:24px"><h2>Contacto</h2></div>
+      <p>¿Quieres comprar un instrumental, un beat a medida o colaborar? Escríbenos.</p>
+      <div class="social">
+        <a class="chip" href="#" target="_blank" rel="noopener">Instagram</a>
+        <a class="chip" href="#" target="_blank" rel="noopener">YouTube</a>
+        <a class="chip" href="#" target="_blank" rel="noopener">SoundCloud</a>
+        <a class="chip" href="#" target="_blank" rel="noopener">Spotify</a>
+      </div>
+    </div>
+    <form id="form">
+      <input name="nombre" placeholder="Tu nombre" required>
+      <input name="email" type="email" placeholder="Tu email" required>
+      <select name="motivo">
+        <option>Comprar instrumental</option>
+        <option>Beat a medida</option>
+        <option>Colaboración</option>
+        <option>Otro</option>
+      </select>
+      <textarea name="mensaje" placeholder="Cuéntanos tu idea" required></textarea>
+      <button class="btn btn-primary" type="submit" style="justify-self:start">Enviar mensaje</button>
+      <p class="ok" id="ok">Se abrirá tu correo para enviar el mensaje.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> Koala Beats. Todos los derechos reservados.</span>
+    <span>Hecho con pasión por el hip hop</span>
+  </div>
+</footer>
+
+<div class="player" id="player">
+  <div class="wrap">
+    <div class="p-info"><b id="pTitle">—</b><span id="pType"></span></div>
+    <div class="p-ctrl">
+      <button id="prev" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
+      <button id="toggle" class="main" aria-label="Reproducir"></button>
+      <button id="next" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
+      <button id="loopBtn" aria-label="Repetir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></button>
+    </div>
+    <div class="p-bar"><span id="cur">0:00</span><div class="bar" id="bar"><i id="fill"></i></div><span id="tot">0:00</span></div>
+    <input class="vol" id="vol" type="range" min="0" max="1" step="0.01" value="0.9" aria-label="Volumen">
+  </div>
+</div>
+
+<audio id="audio" preload="none"></audio>
+
+<!-- Lista de pistas: edita tracks.js para añadir o quitar archivos -->
+<script src="tracks.js"></script>
+<script>
+(function(){
+  var CONTACT_EMAIL = "cristian8610@gmail.com";
+  var ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+  var ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
+  var ICON_STOP = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h12v12H6z"/></svg>';
+  var ICON_DL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 5-5m-5 5-5-5M4 21h16"/></svg>';
+  var ICON_CART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11.5l2-8H6.2"/></svg>';
+  var ICON_PLUS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+  var ICON_X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+
+  var tracks = (window.TRACKS || []).map(function(t,i){ t.id=i; return t; });
+  var audio = document.getElementById('audio');
+  var current = null, queue = [];
+  var $ = function(id){ return document.getElementById(id); };
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function fmt(s){ if(!isFinite(s)) return '0:00'; s=Math.floor(s); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+  function src(t){ return encodeURI(t.file); }
+
+  var lists = {}, PAGE = 30, shown = PAGE, fGenre = '';
+  var genres = [];
+  tracks.forEach(function(t){ if(t.type==='loop' && genres.indexOf(t.genre)<0) genres.push(t.genre); });
+  genres.sort();
+
+  function row(t){
+    var acts = t.type==='loop'
+      ? '<a class="dl" href="'+src(t)+'" download><span>Descargar</span>'+ICON_DL+'</a>'+
+        '<button class="dl add" data-add="'+t.id+'"><span>Al estudio</span>'+ICON_PLUS+'</button>'
+      : '<button class="dl buy" data-beat="'+t.id+'"><span>Comprar'+(t.price?' '+esc(t.price):'')+'</span>'+ICON_CART+'</button>';
+    return '<div class="track" data-id="'+t.id+'">'+
+      '<button class="play" aria-label="Reproducir '+esc(t.title)+'">'+ICON_PLAY+'</button>'+
+      '<div style="min-width:0"><div class="t-title">'+esc(t.title)+'</div><div class="t-meta"><span>'+esc(t.genre)+'</span></div></div>'+
+      (t.type==='loop' ? '<span class="badge free">Gratis</span>' : '<span class="badge">'+(t.preview?'Preview':'Instrumental')+'</span>')+
+      '<span class="t-dur" data-dur="'+t.id+'">'+(t.dur?fmt(t.dur):'')+'</span>'+
+      '<div class="acts">'+acts+'</div>'+
+    '</div>';
+  }
+
+  function render(type){
+    var box = $('list-'+type);
+    var q = (document.querySelector('.search[data-for="'+type+'"]').value||'').toLowerCase();
+    var items = tracks.filter(function(t){
+      if(t.type!==type) return false;
+      if(type==='loop' && fGenre && t.genre!==fGenre) return false;
+      return !q || [t.title,t.genre].join(' ').toLowerCase().indexOf(q)>-1;
+    });
+    lists[type] = items;
+    var vis = type==='loop' ? items.slice(0, shown) : items;
+    if(type==='loop'){
+      $('loopCount').textContent = items.length+' loops'+(items.length>vis.length?' · mostrando '+vis.length:'');
+      $('more').style.display = items.length>vis.length ? '' : 'none';
+    }
+    box.innerHTML = vis.length ? vis.map(row).join('') :
+      '<div class="empty">'+(q||fGenre?'No hay resultados.':'Aún no hay pistas en esta sección.')+'</div>';
+    paint();
+  }
+
+  function paint(){
+    document.querySelectorAll('.track').forEach(function(el){
+      var on = current && +el.dataset.id===current.id;
+      el.classList.toggle('playing', on);
+      el.querySelector('.play').innerHTML = (on && !audio.paused) ? ICON_PAUSE : ICON_PLAY;
+    });
+    document.querySelectorAll('.lib-item').forEach(function(el){
+      var on = current && +el.dataset.id===current.id && !audio.paused;
+      var b = el.querySelector('[data-prev]'); b.innerHTML = on ? ICON_PAUSE : ICON_PLAY; b.classList.toggle('on', on);
+    });
+    $('toggle').innerHTML = audio.paused ? ICON_PLAY : ICON_PAUSE;
+  }
+
+  function play(t, list){
+    if(current && current.id===t.id){ audio.paused ? audio.play() : audio.pause(); return; }
+    if(typeof stStop === 'function') stStop();
+    current = t;
+    queue = list || lists[t.type] || [t];
+    audio.src = src(t);
+    audio.play();
+    $('pTitle').textContent = t.title;
+    $('pType').textContent = t.type==='loop' ? 'Loop gratis' : 'Instrumental';
+    $('player').classList.add('show');
+  }
+
+  function step(d){
+    if(!current||!queue.length) return;
+    var i = queue.findIndex(function(x){return x.id===current.id;});
+    play(queue[(i+d+queue.length)%queue.length], queue);
+  }
+
+  // Duraciones de los instrumentales (solo lee la cabecera del archivo)
+  tracks.filter(function(t){return t.type==='instrumental';}).forEach(function(t){
+    var a = new Audio(); a.preload='metadata'; a.src=src(t);
+    a.addEventListener('loadedmetadata', function(){ t.dur=a.duration; var d=document.querySelector('[data-dur="'+t.id+'"]'); if(d) d.textContent=fmt(a.duration); });
+  });
+
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('.play');
+    if(b){ play(tracks[+b.closest('.track').dataset.id]); return; }
+    var bt = e.target.closest('[data-beat]');
+    if(bt){
+      var t = tracks[+bt.dataset.beat], fm = $('form');
+      if(t.buy){ window.open(t.buy, '_blank', 'noopener'); return; }
+      fm.motivo.value = 'Comprar instrumental';
+      fm.mensaje.value = 'Hola, quiero comprar el instrumental "'+t.title+'"'+(t.price?' ('+t.price+')':'')+'.';
+      location.hash = '#contacto';
+      return;
+    }
+    var ad = e.target.closest('[data-add]');
+    if(ad){ stAdd(tracks[+ad.dataset.add], true); }
+  });
+  document.querySelectorAll('.search').forEach(function(inp){
+    inp.addEventListener('input', function(){ shown=PAGE; render(inp.dataset.for); });
+  });
+  $('more').onclick = function(){ shown+=PAGE; render('loop'); };
+  $('genreChips').innerHTML = ['<button class="chip on" data-g="">Todos</button>'].concat(genres.map(function(g){
+    return '<button class="chip" data-g="'+esc(g)+'">'+esc(g)+'</button>';
+  })).join('');
+  $('genreChips').addEventListener('click', function(e){
+    var c = e.target.closest('.chip'); if(!c) return;
+    fGenre = c.dataset.g; shown=PAGE;
+    this.querySelectorAll('.chip').forEach(function(x){ x.classList.toggle('on', x===c); });
+    render('loop');
+  });
+
+  $('toggle').onclick = function(){ if(current) audio.paused ? audio.play() : audio.pause(); };
+  $('prev').onclick = function(){ step(-1); };
+  $('next').onclick = function(){ step(1); };
+  $('loopBtn').onclick = function(){ audio.loop=!audio.loop; this.classList.toggle('on',audio.loop); };
+  $('vol').oninput = function(){ audio.volume=this.value; };
+  audio.volume = 0.9;
+  ['play','pause'].forEach(function(ev){ audio.addEventListener(ev, paint); });
+  audio.addEventListener('ended', function(){ step(1); });
+  audio.addEventListener('loadedmetadata', function(){
+    $('tot').textContent = fmt(audio.duration);
+    current.dur = audio.duration;
+    var d = document.querySelector('[data-dur="'+current.id+'"]'); if(d) d.textContent = fmt(audio.duration);
+  });
+  audio.addEventListener('timeupdate', function(){
+    $('cur').textContent = fmt(audio.currentTime);
+    $('fill').style.width = (audio.duration ? audio.currentTime/audio.duration*100 : 0)+'%';
+  });
+  $('bar').addEventListener('click', function(e){
+    if(!audio.duration) return;
+    var r = this.getBoundingClientRect();
+    audio.currentTime = (e.clientX-r.left)/r.width*audio.duration;
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.code==='Space' && !/INPUT|TEXTAREA|SELECT|BUTTON/.test(e.target.tagName) && current){ e.preventDefault(); $('toggle').click(); }
+  });
+
+  /* ================= ESTUDIO KOALA ================= */
+  var NTR = 4;
+  var ctx = null, master = null;
+  var buffers = {}, pending = {};
+  var lanes = [], selLane = 0, nBlocks = 8, speed = 1;
+  var playing = false, startT = 0, nextBlock = 0, nextT = 0, timer = null, live = [], raf = null;
+  for(var i=0;i<NTR;i++) lanes.push({loop:null, vol:0.8, mute:false, cells:[], gain:null});
+  // Patrón inicial: la pista 1 suena siempre, las demás entran poco a poco
+  function defaultCells(i){ var c=[]; for(var b=0;b<16;b++) c.push(i===0 || b>=i*2); return c; }
+  lanes.forEach(function(l,i){ l.cells = defaultCells(i); });
+
+  function ensureCtx(){
+    if(ctx) return;
+    ctx = new (window.AudioContext||window.webkitAudioContext)();
+    master = ctx.createGain(); master.gain.value = +$('stVol').value; master.connect(ctx.destination);
+    lanes.forEach(function(l){ l.gain = ctx.createGain(); l.gain.connect(master); setGain(l); });
+  }
+  function setGain(l){ if(l.gain) l.gain.gain.value = l.mute ? 0 : l.vol; }
+
+  // Los loops del estudio se cargan desde estudio/<nombre>.js para que funcione también abriendo el archivo sin servidor
+  window.KOALA_LOOP = function(name, dataUrl){
+    var b64 = dataUrl.slice(dataUrl.indexOf(',')+1), bin = atob(b64), u = new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+    ensureCtx();
+    ctx.decodeAudioData(u.buffer, function(buf){
+      buffers[name] = buf;
+      (pending[name]||[]).forEach(function(cb){ cb(buf); }); delete pending[name];
+    }, function(){ msg('No se pudo leer el loop '+name+'.'); });
+  };
+  function loadLoop(t, cb){
+    if(buffers[t.studio]) return cb(buffers[t.studio]);
+    if(pending[t.studio]){ pending[t.studio].push(cb); return; }
+    pending[t.studio] = [cb];
+    if(/^https?:/.test(location.protocol)){
+      // En internet se lee el propio WAV del loop; los .js de estudio/ solo hacen falta abriendo el archivo en el PC
+      fetch(src(t)).then(function(r){ if(!r.ok) throw 0; return r.arrayBuffer(); }).then(function(ab){
+        ensureCtx();
+        ctx.decodeAudioData(ab, function(buf){
+          buffers[t.studio] = buf;
+          (pending[t.studio]||[]).forEach(function(f){ f(buf); }); delete pending[t.studio];
+        }, function(){ delete pending[t.studio]; msg('No se pudo leer el loop '+t.title+'.'); });
+      }).catch(function(){ delete pending[t.studio]; msg('No se pudo descargar el loop '+t.title+'.'); });
+      return;
+    }
+    var s = document.createElement('script');
+    s.src = 'estudio/'+encodeURIComponent(t.studio)+'.js';
+    s.onerror = function(){ delete pending[t.studio]; msg('No encuentro estudio/'+t.studio+'.js'); };
+    document.head.appendChild(s);
+  }
+
+  function msg(m){ $('stMsg').textContent = m; }
+  function baseLen(){
+    for(var i=0;i<NTR;i++) if(lanes[i].loop && buffers[lanes[i].loop.studio]) return buffers[lanes[i].loop.studio].duration;
+    return 0;
+  }
+  function blockLen(){ return baseLen()/speed; }
+
+  function stAdd(t, jump){
+    ensureCtx();
+    var li = selLane;
+    if(lanes[li].loop){ var free = lanes.findIndex(function(l){return !l.loop;}); if(free>-1) li = free; }
+    msg('Cargando '+t.title+'…');
+    loadLoop(t, function(){
+      lanes[li].loop = t; selLane = (li+1)%NTR;
+      for(var k=0;k<NTR;k++){ if(!lanes[(li+1+k)%NTR].loop){ selLane=(li+1+k)%NTR; break; } }
+      msg(t.title+' cargado en la pista '+(li+1)+'.');
+      drawArr();
+    });
+    if(jump) location.hash = '#estudio';
+  }
+
+  function drawArr(){
+    var arr = $('arr'); arr.style.setProperty('--blocks', nBlocks);
+    var h = '<div class="ruler"><span></span>';
+    for(var b=0;b<nBlocks;b++) h += '<span data-r="'+b+'">'+(b+1)+'</span>';
+    h += '</div>';
+    lanes.forEach(function(l,i){
+      h += '<div class="lane'+(i===selLane?' sel':'')+'" data-lane="'+i+'"><div class="lane-head">'+
+        '<div class="row"><span class="nm'+(l.loop?'':' empty-nm')+'">'+(i+1)+'. '+(l.loop?esc(l.loop.title):'Pista vacía')+'</span>'+
+        (l.loop?'<button class="ib'+(l.mute?' on':'')+'" data-mute="'+i+'" title="Silenciar">M</button><button class="ib" data-del="'+i+'" title="Quitar loop">'+ICON_X+'</button>':'')+'</div>'+
+        '<div class="row"><input type="range" min="0" max="1" step="0.01" value="'+l.vol+'" data-lvol="'+i+'" aria-label="Volumen pista '+(i+1)+'"></div>'+
+      '</div>';
+      for(var b=0;b<nBlocks;b++) h += '<button class="cell'+(l.cells[b]?' on':'')+'" data-cell="'+i+':'+b+'"'+(l.loop?'':' disabled')+' aria-label="Pista '+(i+1)+' bloque '+(b+1)+'"></button>';
+      h += '</div>';
+    });
+    arr.innerHTML = h;
+    var L = blockLen();
+    $('stInfo').innerHTML = L ? 'Bloque: <b>'+L.toFixed(1)+' s</b> · Beat: <b>'+fmt(L*nBlocks)+'</b>' : 'Carga un loop para empezar';
+    $('stExport').disabled = !L;
+    $('stPlay').innerHTML = playing ? ICON_STOP : ICON_PLAY;
+  }
+
+  $('arr').addEventListener('click', function(e){
+    var c = e.target.closest('[data-cell]');
+    if(c){ var p=c.dataset.cell.split(':'); var l=lanes[+p[0]]; l.cells[+p[1]]=!l.cells[+p[1]]; c.classList.toggle('on', l.cells[+p[1]]); return; }
+    var m = e.target.closest('[data-mute]');
+    if(m){ var l2=lanes[+m.dataset.mute]; l2.mute=!l2.mute; setGain(l2); m.classList.toggle('on', l2.mute); return; }
+    var d = e.target.closest('[data-del]');
+    if(d){ lanes[+d.dataset.del].loop=null; selLane=+d.dataset.del; if(!baseLen()) stStop(); drawArr(); return; }
+    var ln = e.target.closest('.lane');
+    if(ln && !e.target.closest('input')){ selLane=+ln.dataset.lane; drawArr(); }
+  });
+  $('arr').addEventListener('input', function(e){
+    var v = e.target.closest('[data-lvol]'); if(!v) return;
+    var l = lanes[+v.dataset.lvol]; l.vol = +v.value; setGain(l);
+  });
+
+  // Programa un bloque: cada loop activo suena en bucle durante el bloque
+  function scheduleBlock(c, outs, b, t0, L){
+    lanes.forEach(function(l, i){
+      if(!l.loop || !l.cells[b]) return;
+      var buf = buffers[l.loop.studio]; if(!buf) return;
+      var s = c.createBufferSource(); s.buffer = buf; s.loop = true; s.playbackRate.value = speed;
+      s.connect(outs[i]); s.start(t0); s.stop(t0+L);
+      if(c===ctx){ s.onended = function(){ s.__done = true; }; live.push(s); }
+    });
+  }
+  function tick(){
+    var L = blockLen(); if(!L){ stStop(); return; }
+    while(nextT < ctx.currentTime + 0.6){
+      scheduleBlock(ctx, lanes.map(function(l){return l.gain;}), nextBlock, nextT, L);
+      nextT += L; nextBlock = (nextBlock+1) % nBlocks;
+    }
+    live = live.filter(function(s){ return s.__done !== true; });
+  }
+  function drawHead(){
+    if(!playing) return;
+    var L = blockLen(), b = L ? Math.floor((ctx.currentTime-startT)/L) % nBlocks : -1;
+    document.querySelectorAll('.cell.now').forEach(function(x){ if(+x.dataset.cell.split(':')[1]!==b) x.classList.remove('now'); });
+    document.querySelectorAll('[data-cell$=":'+b+'"]').forEach(function(x){ x.classList.add('now'); });
+    document.querySelectorAll('.ruler span').forEach(function(x){ x.classList.toggle('now', +x.dataset.r===b && x.dataset.r!==undefined); });
+    raf = requestAnimationFrame(drawHead);
+  }
+  function stStart(){
+    ensureCtx(); if(ctx.state==='suspended') ctx.resume();
+    if(!blockLen()){ msg('Primero añade un loop a una pista.'); return; }
+    if(!audio.paused) audio.pause();
+    playing = true; startT = nextT = ctx.currentTime + 0.08; nextBlock = 0;
+    tick(); timer = setInterval(tick, 100); drawHead(); drawArr();
+  }
+  window.stStop = function(){
+    if(!playing) return;
+    playing = false; clearInterval(timer); cancelAnimationFrame(raf);
+    live.forEach(function(s){ try{ s.stop(); }catch(e){} }); live = [];
+    document.querySelectorAll('.cell.now').forEach(function(x){ x.classList.remove('now'); });
+    drawArr();
+  };
+  var stStop = window.stStop;
+  function restart(){ if(playing){ stStop(); stStart(); } }
+
+  $('stPlay').onclick = function(){ playing ? stStop() : stStart(); };
+  $('stSpeed').oninput = function(){ speed = +this.value; $('stSpeedV').textContent = Math.round(speed*100)+'%'; drawArr(); restart(); };
+  $('stBlocks').onchange = function(){ nBlocks = +this.value; drawArr(); restart(); };
+  $('stVol').oninput = function(){ if(master) master.gain.value = +this.value; };
+  $('stClear').onclick = function(){ stStop(); lanes.forEach(function(l,i){ l.loop=null; l.mute=false; l.vol=.8; l.cells=defaultCells(i); setGain(l); }); selLane=0; msg(''); drawArr(); };
+
+  // Exportar a WAV
+  $('stExport').onclick = function(){
+    var L = blockLen(); if(!L) return;
+    var btn = this; btn.disabled = true; msg('Creando tu beat…');
+    var sr = 44100, oc = new OfflineAudioContext(2, Math.ceil(sr*L*nBlocks), sr);
+    var m = oc.createGain(); m.gain.value = +$('stVol').value; m.connect(oc.destination);
+    var outs = lanes.map(function(l){ var g = oc.createGain(); g.gain.value = l.mute?0:l.vol; g.connect(m); return g; });
+    for(var b=0;b<nBlocks;b++) scheduleBlock(oc, outs, b, b*L, L);
+    oc.startRendering().then(function(buf){
+      var blob = toWav(buf), a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = 'koala-beat.wav';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); }, 5000);
+      msg('Beat descargado: koala-beat.wav ('+fmt(buf.duration)+').'); btn.disabled = false;
+    }).catch(function(){ msg('No se pudo crear el WAV.'); btn.disabled = false; });
+  };
+  function toWav(buf){
+    var ch = buf.numberOfChannels, len = buf.length, sr = buf.sampleRate;
+    var data = new DataView(new ArrayBuffer(44 + len*ch*2));
+    function str(o,s){ for(var i=0;i<s.length;i++) data.setUint8(o+i, s.charCodeAt(i)); }
+    str(0,'RIFF'); data.setUint32(4, 36+len*ch*2, true); str(8,'WAVE'); str(12,'fmt ');
+    data.setUint32(16,16,true); data.setUint16(20,1,true); data.setUint16(22,ch,true); data.setUint32(24,sr,true);
+    data.setUint32(28,sr*ch*2,true); data.setUint16(32,ch*2,true); data.setUint16(34,16,true); str(36,'data'); data.setUint32(40,len*ch*2,true);
+    var chans = []; for(var c=0;c<ch;c++) chans.push(buf.getChannelData(c));
+    var o = 44, peak = 0;
+    for(var c2=0;c2<ch;c2++) for(var j=0;j<len;j++) peak = Math.max(peak, Math.abs(chans[c2][j]));
+    var norm = peak > 1 ? 1/peak : 1; // evita saturación al sumar varias pistas
+    for(var i=0;i<len;i++) for(var c3=0;c3<ch;c3++){
+      var v = Math.max(-1, Math.min(1, chans[c3][i]*norm)); data.setInt16(o, v<0 ? v*0x8000 : v*0x7FFF, true); o += 2;
+    }
+    return new Blob([data], {type:'audio/wav'});
+  }
+
+  // Biblioteca de loops del estudio
+  genres.forEach(function(g){ var o=document.createElement('option'); o.value=g; o.textContent=g; $('libGenre').appendChild(o); });
+  function drawLib(){
+    var g = $('libGenre').value, q = $('libSearch').value.toLowerCase();
+    var items = tracks.filter(function(t){ return t.type==='loop' && (!g||t.genre===g) && (!q||t.title.toLowerCase().indexOf(q)>-1); });
+    $('libList').innerHTML = items.map(function(t){
+      return '<div class="lib-item" data-id="'+t.id+'"><button class="ib" data-prev="'+t.id+'" aria-label="Escuchar">'+ICON_PLAY+'</button>'+
+        '<span class="nm">'+esc(t.title)+'<br><small>'+fmt(t.dur)+'</small></span>'+
+        '<button class="ib" data-add="'+t.id+'" aria-label="Añadir a la pista">'+ICON_PLUS+'</button></div>';
+    }).join('') || '<div class="empty" style="margin:14px">Sin resultados</div>';
+    lists.lib = items; paint();
+  }
+  $('libGenre').onchange = drawLib; $('libSearch').oninput = drawLib;
+  $('libList').addEventListener('click', function(e){
+    var p = e.target.closest('[data-prev]'); if(p) play(tracks[+p.dataset.prev], lists.lib);
+  });
+
+  // Menú móvil y enlace activo
+  $('burger').onclick = function(){ $('menu').classList.toggle('open'); };
+  document.querySelectorAll('.menu a').forEach(function(a){ a.onclick=function(){ $('menu').classList.remove('open'); }; });
+  var links = document.querySelectorAll('.menu a');
+  var obs = new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting) links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href')==='#'+en.target.id); }); });
+  },{rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('#inicio,section').forEach(function(s){ obs.observe(s); });
+
+  // Formulario: abre el correo del visitante
+  $('form').onsubmit = function(e){
+    e.preventDefault();
+    var f = this;
+    var body = 'Nombre: '+f.nombre.value+'\nEmail: '+f.email.value+'\n\n'+f.mensaje.value;
+    location.href = 'mailto:'+CONTACT_EMAIL+'?subject='+encodeURIComponent(f.motivo.value+' - Koala Beats')+'&body='+encodeURIComponent(body);
+    $('ok').style.display='block';
+  };
+
+  // Ecualizador decorativo
+  var eq = $('eq');
+  for(var k=0;k<18;k++){ var bar=document.createElement('i'); bar.style.animationDelay=(Math.random()*-1.2)+'s'; bar.style.animationDuration=(0.6+Math.random()*0.9)+'s'; eq.appendChild(bar); }
+
+  $('nLoops').textContent = tracks.filter(function(t){return t.type==='loop';}).length;
+  $('nInst').textContent = tracks.filter(function(t){return t.type==='instrumental';}).length;
+  $('nGen').textContent = genres.length;
+  $('year').textContent = new Date().getFullYear();
+  render('instrumental'); render('loop'); drawLib(); drawArr();
+})();
+</script>
+</body>
+</html>
